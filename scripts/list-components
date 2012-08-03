@@ -1,0 +1,13 @@
+#!/bin/sh
+
+COMPONENTS=" \
+	specs \
+	libfso-glib \
+	cornucopia/libfsoframework \
+	cornucopia/fsousaged \
+	cornucopia/fsodatad \
+	cornucopia/fsogsmd \
+	cornucopia/fsodeviced \
+	cornucopia/fsonetworkd \
+	cornucopia/fsosystemd \
+	cornucopia/fsotdld"

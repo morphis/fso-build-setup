@@ -1,0 +1,16 @@
+#!/bin/sh
+
+ROOTDIR=`pwd`
+INSTALLDIR="$ROOTDIR/install"
+
+. $ROOTDIR/scripts/list-components
+
+rm -rf $INSTALLDIR
+
+for comp_path in $COMPONENTS; do
+	pushd $comp_path
+	find . -type d ! -perm -200 -exec chmod u+w {} ';'
+	git clean -fdx . && git reset --hard
+	popd
+done
+

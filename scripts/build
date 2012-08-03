@@ -1,0 +1,49 @@
+#!/bin/sh
+
+ROOTDIR=`pwd`
+INSTALLDIR="$ROOTDIR/install"
+PKGCONFIGDIR="$INSTALLDIR/lib/pkgconfig:$INSTALLDIR/share/pkgconfig"
+DISTARCHIVEDIR="$ROOTDIR/dist-archive"
+
+. $ROOTDIR/scripts/list-components
+
+rm -rf $INSTALLDIR && mkdir -p $INSTALLDIR
+rm -rf $DISTARCHIVEDIR && mkdir -p $DISTARCHIVEDIR
+
+configure_component() {
+	CFLAGS=""
+	HAVE_DATAFILES=0
+	EXTRA_CFLAGS=""
+
+	# component specific configuration
+	base_comp=`basename $comp`
+	if [ -f $ROOTDIR/scripts/config/$base_comp ] ; then
+		echo "including component configuration $ROOTDIR/scripts/config/$base_comp"
+		. $ROOTDIR/scripts/config/$base_comp
+	fi
+
+	if [ $HAVE_DATAFILES == 1 ] ; then
+		CFLAGS="$CFLAGS --with-dbusdatadir=$INSTALLDIR/share --with-dbusconfdir=$INSTALLDIR/etc"
+	fi
+
+	CFLAGS="$CFLAGS --prefix=$INSTALLDIR --enable-vala $EXTRA_CFLAGS"
+	PKG_CONFIG_PATH="$PKGCONFIGDIR" ./configure $CFLAGS || exit 1
+}
+
+for comp_path in $COMPONENTS; do
+	comp=`basename $comp_path`
+	pushd $comp_path
+
+	NOCONFIGURE=1 ./autogen.sh || exit 1
+
+	configure_component $comp
+	VALAFLAGS="--vapidir=$INSTALLDIR/share/vala/vapi" make || exit 1
+	make install || exit 1
+    if [ $comp  != 'specs' ] ; then
+	    VALAFLAGS="--vapidir=$INSTALLDIR/share/vala/vapi" PKG_CONFIG_PATH="$PKGCONFIGDIR" make distcheck || exit 1
+    fi
+	mv *.tar.bz2 $DISTARCHIVEDIR
+
+	popd
+done
+

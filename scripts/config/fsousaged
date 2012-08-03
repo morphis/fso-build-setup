@@ -1,0 +1,2 @@
+EXTRA_CFLAGS="--enable-cmtspeechdata --enable-samplerate"
+HAVE_DATAFILES=1
