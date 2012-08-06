@@ -1,6 +1,7 @@
 #!/bin/sh
 
 COMPONENTS=" \
+	vala-dbus-binding-tool \
 	specs \
 	libfso-glib \
 	cornucopia/libfsoframework \
