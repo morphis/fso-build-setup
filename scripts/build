@@ -27,7 +27,7 @@ configure_component() {
 	fi
 
 	CFLAGS="$CFLAGS --prefix=$INSTALLDIR --enable-vala $EXTRA_CFLAGS"
-	PKG_CONFIG_PATH="$PKGCONFIGDIR" ./configure $CFLAGS || exit 1
+	PATH="$PATH:$INSTALLDIR/bin" PKG_CONFIG_PATH="$PKGCONFIGDIR" ./configure $CFLAGS || exit 1
 }
 
 for comp_path in $COMPONENTS; do
