@@ -10,5 +10,4 @@ COMPONENTS=" \
 	cornucopia/fsogsmd \
 	cornucopia/fsodeviced \
 	cornucopia/fsonetworkd \
-	cornucopia/fsosystemd \
 	cornucopia/fsotdld"
