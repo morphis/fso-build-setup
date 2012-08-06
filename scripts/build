@@ -32,7 +32,7 @@ configure_component() {
 
 for comp_path in $COMPONENTS; do
 	comp=`basename $comp_path`
-	pushd $comp_path
+	cd $ROOTDIR/$comp_path
 
 	NOCONFIGURE=1 ./autogen.sh || exit 1
 
@@ -43,7 +43,5 @@ for comp_path in $COMPONENTS; do
 	    VALAFLAGS="--vapidir=$INSTALLDIR/share/vala/vapi" PKG_CONFIG_PATH="$PKGCONFIGDIR" make distcheck || exit 1
     fi
 	mv *.tar.bz2 $DISTARCHIVEDIR
-
-	popd
 done
 

@@ -8,9 +8,8 @@ INSTALLDIR="$ROOTDIR/install"
 rm -rf $INSTALLDIR
 
 for comp_path in $COMPONENTS; do
-	pushd $comp_path
+	cd $ROOTDIR/$comp_path
 	find . -type d ! -perm -200 -exec chmod u+w {} ';'
 	git clean -fdx . && git reset --hard
-	popd
 done
 

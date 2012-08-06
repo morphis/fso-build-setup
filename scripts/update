@@ -8,6 +8,7 @@ INSTALLDIR="$ROOTDIR/install"
 rm -rf $INSTALLDIR
 
 for comp_path in $COMPONENTS; do
+	cd $ROOTDIR
 	if [ ! -d $comp_path ] ; then
 		base_comp=`dirname $comp_path`
 		if [ $base_comp == "." ] ; then
@@ -16,9 +17,8 @@ for comp_path in $COMPONENTS; do
 			git clone git://git.freesmartphone.org/$base_comp.git
 		fi
 	else
-		pushd $comp_path
+		cd $ROOTDIR/$comp_path
 		git pull
-		popd
 	fi
 done
 
