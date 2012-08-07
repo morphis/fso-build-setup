@@ -1,2 +1,2 @@
-EXTRA_CFLAGS="--enable-libgsm0710mux --enable-modem-qualcomm-palm --enable-modem-nokia-isi --enable-modem-samsung"
+EXTRA_CFLAGS="--enable-libgsm0710mux"
 HAVE_DATAFILES=1
