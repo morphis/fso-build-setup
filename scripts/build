@@ -39,9 +39,10 @@ for comp_path in $COMPONENTS; do
 	configure_component $comp
 	PATH="$PATH:$INSTALLDIR/bin" VALAFLAGS="--vapidir=$INSTALLDIR/share/vala/vapi" make || exit 1
 	make install || exit 1
-    if [ $comp  != 'specs' ] ; then
-	    PATH="$PATH:$INSTALLDIR/bin" VALAFLAGS="--vapidir=$INSTALLDIR/share/vala/vapi" PKG_CONFIG_PATH="$PKGCONFIGDIR" make distcheck || exit 1
-    fi
-	mv *.tar.bz2 $DISTARCHIVEDIR
+
+    # if [ $comp  != 'specs' ] ; then
+	#    PATH="$PATH:$INSTALLDIR/bin" VALAFLAGS="--vapidir=$INSTALLDIR/share/vala/vapi" PKG_CONFIG_PATH="$PKGCONFIGDIR" make distcheck || exit 1
+    # fi
+	# mv *.tar.bz2 $DISTARCHIVEDIR
 done
 
